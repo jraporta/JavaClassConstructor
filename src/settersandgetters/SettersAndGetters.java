@@ -37,6 +37,8 @@ public class SettersAndGetters {
 		System.out.println(getters(atributs,tipos));
 		System.out.println("//Setters");
 		System.out.println(setters(atributs,tipos));
+		System.out.println("//Propis");
+		System.out.println(makeToString(classe, atributs,tipos));
 	}
 	
 	private static String constructor(String classe, ArrayList<String> atributs, ArrayList<String> tipos) {
@@ -77,6 +79,18 @@ public class SettersAndGetters {
 					+ "this.%s = %s;\n"
 					+ "}\n", primeraLetraMayus(atributs.get(i)), tipos.get(i), atributs.get(i), atributs.get(i), atributs.get(i));
 		}
+		return resposta;
+	}
+	
+	private static String makeToString(String classe, ArrayList<String> atributs, ArrayList<String> tipos) {
+		String resposta = String.format("public String toString(){\nreturn \"Sóc una %s", classe);
+		byte elements = (byte) atributs.size();
+		if (elements > 0) resposta += ". "; 
+		for (int i = 0; i < elements - 1; i++) {
+			resposta += String.format("%s: this.%s, ", atributs.get(i), atributs.get(i));
+		}
+		resposta += String.format("%s: this.%s", atributs.get(elements -1), atributs.get(elements -1));
+		resposta += ".\"\n}\n";
 		return resposta;
 	}
 }
