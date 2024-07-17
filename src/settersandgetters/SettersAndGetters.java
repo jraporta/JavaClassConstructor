@@ -7,6 +7,7 @@ public class SettersAndGetters {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
+		String classe = "";
 		String atribut = "";
 		String tipo = "";
 		ArrayList<String> atributs = new ArrayList<String>();
@@ -14,6 +15,8 @@ public class SettersAndGetters {
 		Scanner entrada = new Scanner(System.in);
 		boolean fi = false;
 		
+		System.out.print("Indica el nom de la classe:");
+		classe = entrada.nextLine();
 		
 		do {
 			System.out.print("Indica el nom de l'atribut (o Enter per acabar):");
@@ -28,12 +31,28 @@ public class SettersAndGetters {
 		}while (!fi);
 		entrada.close();
 		
+		System.out.println("//Constructor");
+		System.out.println(constructor(classe,atributs,tipos));
 		System.out.println("//Getters");
 		System.out.println(getters(atributs,tipos));
 		System.out.println("//Setters");
 		System.out.println(setters(atributs,tipos));
 	}
 	
+	private static String constructor(String classe, ArrayList<String> atributs, ArrayList<String> tipos) {
+		String resposta = String.format("public %s(", classe);
+		byte elements = (byte) atributs.size();
+		for (int i = 0; i < elements - 1; i++) {
+			resposta += String.format("%s %s, ", tipos.get(i), atributs.get(i));
+		}
+		resposta += String.format("%s %s){\n", tipos.get(elements - 1), atributs.get(elements - 1));
+		for (int i = 0; i < elements; i++) {
+			resposta += String.format("this.%s = %s;\n", atributs.get(i), atributs.get(i));
+		}
+		resposta += "}\n";
+		return resposta;
+	}
+
 	public static String getters(ArrayList<String> atributs, ArrayList<String> tipos) {
 		String resposta = "";
 		byte elements = (byte) atributs.size();
